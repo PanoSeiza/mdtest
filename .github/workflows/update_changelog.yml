@@ -2,8 +2,8 @@ name: Update Changelog
 
 on:  
   schedule:  
-    - cron: '0 * * * *'  # every hour
-  workflow_dispatch:  # manual
+    - cron: '0 * * * *'  # every hour  
+  workflow_dispatch:  # manual  
 
 jobs:  
   update-changelog:  
@@ -17,23 +17,21 @@ jobs:
         run: |  
           # Clone the other user's repository  
           git clone https://github.com/PanoSeiza/FancyMenuTest.git /tmp/repo  
-          # Go to the directory  
-          cd /tmp/repo  
           # Fetch the latest changes  
+          cd /tmp/repo  
           git pull origin master  
-          
+
       - name: Compare changelogs  
         run: |  
           # Compare existing changelog.txt with the upstream changelog.txt  
           echo "Finding differences..."  
           if ! diff ./changelog.txt /tmp/repo/changelog.txt > changelog_diff.txt; then  
             echo "Differences found. Saving to changelog_diff.txt."  
-            # Use sed to clean the changelog_diff.txt by removing the '>' symbols and other metadata  
+            # Clean the changelog_diff.txt by removing unwanted lines  
             sed -i 's/^> //' changelog_diff.txt  # Remove leading '>' symbols  
             sed -i '/^[0-9]\+[a-z][0-9,]*$/d' changelog_diff.txt  # Remove lines like '0a1,16'  
-            # Append the new content from changelog.txt to changelog.txt  
-            new_entries=$(head -n -$(wc -l < ./changelog.txt) /tmp/repo/changelog.txt)  
-            echo "$new_entries" >> ./changelog.txt  
+            # Overwrite the existing changelog.txt with the upstream version  
+            cp /tmp/repo/changelog.txt ./changelog.txt  
           else  
             echo "No differences found."  
             # Remove changelog_diff.txt if it was created without differences  
@@ -47,9 +45,9 @@ jobs:
             git config --local user.name "Seiza"  
             git add changelog.txt changelog_diff.txt  
             git commit -m "Update changelog.txt and changelog_diff.txt with differences from upstream changelog.txt"  
-            git push origin main  # Change 'main' if your default branch is different  
+            git push origin master  # Change 'master' if your default branch is different  
           else  
             echo "No changes to commit."  
           fi  
         env:  
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
