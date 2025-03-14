@@ -45,7 +45,7 @@ jobs:
             git config --local user.name "Seiza"  
             git add changelog.txt changelog_diff.txt  
             git commit -m "Update changelog.txt and changelog_diff.txt with differences from upstream changelog.txt"  
-            git push origin master  # Change 'master' if your default branch is different  
+            git push origin main 
           else  
             echo "No changes to commit."  
           fi  
