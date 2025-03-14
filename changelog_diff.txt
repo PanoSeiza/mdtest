@@ -9,8 +9,6 @@ CHANGELOG | FANCYMENU v3.4.6
 - Fixed Element Animator not stopping to animate elements when the Animator gets hidden via requirements, etc. (#1077)
 - Fixed game crashing when deleting a keyframe in the Keyframe Editor screen of the Element Animator (#1076)
  
-%changelog:end%
-
 
 
 
