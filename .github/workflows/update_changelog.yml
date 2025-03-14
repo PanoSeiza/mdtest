@@ -3,6 +3,7 @@ name: Update Changelog
 on:  
   schedule:  
     - cron: '0 * * * *'  # every hour
+  workflow_dispatch:  # manual
 
 jobs:  
   update-changelog:  
