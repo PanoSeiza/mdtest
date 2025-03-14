@@ -20,7 +20,7 @@ jobs:
           # Go to the directory  
           cd /tmp/repo  
           # Fetch the latest changes  
-          git pull origin main  # Change 'main' if the default branch is different.  
+          git pull origin master  
           
       - name: Compare changelogs  
         run: |  
