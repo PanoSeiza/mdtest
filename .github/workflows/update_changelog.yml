@@ -25,14 +25,14 @@ jobs:
       - name: Compare changelogs  
         run: |  
           # Compare the changelog files and save the differences if they exist  
-          if diff ./changelog.md /tmp/repo/changelog.txt > changelog_diff.md; then  
+          if diff ./changelog.txt /tmp/repo/changelog.txt > changelog_diff.txt; then  
             echo "No differences found."  
             # Remove the changelog_diff.md if it was created without differences  
-            rm changelog_diff.md  
+            rm changelog_diff.txt  
           else  
-            echo "Differences found. Saving to changelog_diff.md."  
-            # Append the new content to changelog.md  
-            cp /tmp/repo/changelog.txt ./changelog.md  
+            echo "Differences found. Saving to changelog_diff.txt."  
+            # Append the new content to changelog.txt  
+            cp /tmp/repo/changelog.txt ./changelog.txt  
           fi  
 
       - name: Commit and push changes  
@@ -40,7 +40,7 @@ jobs:
           if [ -f changelog_diff.md ]; then  
             git config --local user.email "justrandom.work@gmail.com"  
             git config --local user.name "Seiza"  
-            git add changelog.md changelog_diff.md  
+            git add changelog.txt changelog_diff.txt  
             git commit -m "Update changelog.md and changelog_diff.md with differences from upstream changelog.txt"  
             git push origin main  # Change 'main' if your default branch is different  
           else  
