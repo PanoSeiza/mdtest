@@ -28,8 +28,9 @@ jobs:
           if ! diff ./changelog.txt /tmp/repo/changelog.txt > changelog_diff.txt; then  
             echo "Differences found. Saving to changelog_diff.txt."  
             # Clean the changelog_diff.txt by removing unwanted lines  
-            sed -i 's/^> //' changelog_diff.txt  # Remove leading '>' symbols  
-            sed -i '/^[0-9]\+[a-z][0-9,]*$/d' changelog_diff.txt  # Remove lines like '0a1,16'  
+            sed -i 's/^> //' changelog_diff.txt 
+            sed -i '/^[0-9]\+[a-z][0-9,]*$/d' changelog_diff.txt 
+            sed -i '/%changelog:end%/d' changelog_diff.txt 
             # Overwrite the existing changelog.txt with the upstream version  
             cp /tmp/repo/changelog.txt ./changelog.txt  
           else  
