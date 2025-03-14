@@ -16,7 +16,7 @@ jobs:
       - name: Get changes from upstream  
         run: |  
           # Clone the other user's repository  
-          git clone https://github.com/PanoSeiza/FancyMenuTest.git /tmp/repo  
+          git clone https://github.com/Keksuccino/FancyMenu.git /tmp/repo  
           # Fetch the latest changes  
           cd /tmp/repo  
           git pull origin master  
