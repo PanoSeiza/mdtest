@@ -1,0 +1,49 @@
+name: Update Changelog  
+
+on:  
+  schedule:  
+    - cron: '0 * * * *'  # every hour
+
+jobs:  
+  update-changelog:  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      - name: Checkout repository  
+        uses: actions/checkout@v2  
+
+      - name: Get changes from upstream  
+        run: |  
+          # Clone the other user's repository  
+          git clone https://github.com/PanoSeiza/FancyMenuTest.git /tmp/repo  
+          # Go to the directory  
+          cd /tmp/repo  
+          # Fetch the latest changes  
+          git pull origin main  # Change 'main' if the default branch is different.  
+          
+      - name: Compare changelogs  
+        run: |  
+          # Compare the changelog files and save the differences if they exist  
+          if diff ./changelog.md /tmp/repo/changelog.txt > changelog_diff.md; then  
+            echo "No differences found."  
+            # Remove the changelog_diff.md if it was created without differences  
+            rm changelog_diff.md  
+          else  
+            echo "Differences found. Saving to changelog_diff.md."  
+            # Append the new content to changelog.md  
+            cp /tmp/repo/changelog.txt ./changelog.md  
+          fi  
+
+      - name: Commit and push changes  
+        run: |  
+          if [ -f changelog_diff.md ]; then  
+            git config --local user.email "justrandom.work@gmail.com"  
+            git config --local user.name "Seiza"  
+            git add changelog.md changelog_diff.md  
+            git commit -m "Update changelog.md and changelog_diff.md with differences from upstream changelog.txt"  
+            git push origin main  # Change 'main' if your default branch is different  
+          else  
+            echo "No changes to commit."  
+          fi  
+        env:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
