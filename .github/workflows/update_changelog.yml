@@ -24,15 +24,17 @@ jobs:
           
       - name: Compare changelogs  
         run: |  
-          # Compare the changelog files and save the differences if they exist  
-          if diff ./changelog.txt /tmp/repo/changelog.txt > changelog_diff.txt; then  
-            echo "No differences found."  
-            # Remove the changelog_diff.txt if it was created without differences  
-            rm changelog_diff.txt  
+          # Compare existing changelog.md with the upstream changelog.txt  
+          echo "Finding differences..."  
+          if ! diff ./changelog.md /tmp/repo/changelog.txt > changelog_diff.md; then  
+            echo "Differences found. Saving to changelog_diff.md."  
+            # Append the new content from changelog.txt to changelog.md  
+            new_entries=$(head -n -$(wc -l < ./changelog.md) /tmp/repo/changelog.txt)  
+            echo "$new_entries" >> ./changelog.md  
           else  
-            echo "Differences found. Saving to changelog_diff.txt."  
-            # Append the new content to changelog.txt  
-            cp /tmp/repo/changelog.txt ./changelog.txt  
+            echo "No differences found."  
+            # Remove changelog_diff.md if it was created without differences  
+            rm changelog_diff.md  
           fi  
 
       - name: Commit and push changes  
