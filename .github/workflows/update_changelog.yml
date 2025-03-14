@@ -24,16 +24,15 @@ jobs:
           
       - name: Compare changelogs  
         run: |  
-          # Sort both changelog files before comparing  
-          sort ./changelog.txt -o ./changelog.txt  
-          sort /tmp/repo/changelog.txt -o /tmp/repo/changelog.txt  
-
-          # Compare existing changelog.txt with the upstream changelog.txt using comm  
+          # Compare existing changelog.txt with the upstream changelog.txt  
           echo "Finding differences..."  
-          if ! comm -13 <(sort ./changelog.txt) <(sort /tmp/repo/changelog.txt) > changelog_diff.txt; then  
+          if ! diff ./changelog.txt /tmp/repo/changelog.txt > changelog_diff.txt; then  
             echo "Differences found. Saving to changelog_diff.txt."  
+            # Use sed to clean the changelog_diff.txt by removing the '>' symbols and other metadata  
+            sed -i 's/^> //' changelog_diff.txt  # Remove leading '>' symbols  
+            sed -i '/^[0-9]\+[a-z][0-9,]*$/d' changelog_diff.txt  # Remove lines like '0a1,16'  
             # Append the new content from changelog.txt to changelog.txt  
-            new_entries=$(comm -13 <(sort ./changelog.txt) <(sort /tmp/repo/changelog.txt))  
+            new_entries=$(head -n -$(wc -l < ./changelog.txt) /tmp/repo/changelog.txt)  
             echo "$new_entries" >> ./changelog.txt  
           else  
             echo "No differences found."  
