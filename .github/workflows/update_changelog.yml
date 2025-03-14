@@ -24,12 +24,16 @@ jobs:
           
       - name: Compare changelogs  
         run: |  
-          # Compare existing changelog.txt with the upstream changelog.txt  
+          # Sort both changelog files before comparing  
+          sort ./changelog.txt -o ./changelog.txt  
+          sort /tmp/repo/changelog.txt -o /tmp/repo/changelog.txt  
+
+          # Compare existing changelog.txt with the upstream changelog.txt using comm  
           echo "Finding differences..."  
-          if ! diff ./changelog.txt /tmp/repo/changelog.txt > changelog_diff.txt; then  
+          if ! comm -13 <(sort ./changelog.txt) <(sort /tmp/repo/changelog.txt) > changelog_diff.txt; then  
             echo "Differences found. Saving to changelog_diff.txt."  
             # Append the new content from changelog.txt to changelog.txt  
-            new_entries=$(head -n -$(wc -l < ./changelog.txt) /tmp/repo/changelog.txt)  
+            new_entries=$(comm -13 <(sort ./changelog.txt) <(sort /tmp/repo/changelog.txt))  
             echo "$new_entries" >> ./changelog.txt  
           else  
             echo "No differences found."  
