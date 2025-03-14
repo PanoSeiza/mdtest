@@ -1,22 +1,13 @@
-CHANGELOG | FANCYMENU v3.4.5
 
-- Changed FancyMenu's license to DSMSLv3 (nothing will really change, it's just an updated version that's a bit clearer about forking the code and stuff)
-- Added option to disable the smooth filling animation of Progress Bar elements (#1073)
-- Added "Current Player Oxygen Level" placeholder (for Spiffy) (#1069)
-- Added "Max Player Oxygen Level" placeholder (for Spiffy) (#1069)
-- Added "Current Player Oxygen Level (Percent)" placeholder (for Spiffy) (#1069)
-- Added "/fmlayout <layout_name> <enabled [true|false]> <target_players>" command to remotely enable/disable layouts for players (#1068)
-- Added German localization
-- Added Russian localization (Thanks to xllifi!)
-- Added Japanese localization
-- Updated Simplified Chinese localization (Thanks to Henry!)
-- Renamed placeholders, actions and requirements referring to the "active hotbar slot" to say "selected hotbar slot" instead (#1067)
-- Fixed "Modified JAR" warning rendering over Forge/NeoForge "Failed to Load" screen (#1074)
-- Fixed Progress Bar element never visually reaching 100% (#1071)
-- Fixed some cases where the dragged element would change its position when changing its anchor by hovering an anchor point or element
-- Fixed server crashing on launch when FancyMenu is installed (#1065)
-- Fixed entry spam in audio_element_controller_metas.json file (#1066)
-- Fixed tooltips of custom buttons not having a background until a Vanilla tooltip gets rendered (probably only happened in MC 1.21.1)
+CHANGELOG | FANCYMENU v3.4.6
+
+- Added option to the Element Animator's Keyframe Editor screen to manually set the timestamp of the selected keyframe (#1081)
+- It is now possible to use the arrow keys to move the preview in the Keyframe Editor screen of the Element Animator (#1082)
+- Improved the smooth filling logic of Progress Bar elements to make them not jump too much when correcting visual bugs
+- Fixed button in Keyframe Editor screen of Element Animator going out of screen when using a GUI scale that's too big for the screen (#1080)
+- Fixed Progress Bar elements refilling themselves every time the user reloads the screen or resizes the window (#1078)
+- Fixed Element Animator not stopping to animate elements when the Animator gets hidden via requirements, etc. (#1077)
+- Fixed game crashing when deleting a keyframe in the Keyframe Editor screen of the Element Animator (#1076)
  
 
 
