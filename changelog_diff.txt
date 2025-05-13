@@ -1,8 +1,6 @@
-CHANGELOG | FANCYMENU v3.5.1
+CHANGELOG | FANCYMENU v3.5.2
 
-- Ported mod to MC 1.21.5
-- The old "Custom Localizations" system got removed, so it's now not possible anymore to load localizations using FancyMenu's own localization file format
-  - Loading Vanilla Minecraft localization files via resource pack still works like before, so this is now the new default to load custom localizations
+- Fixed a bug in 1.18.2, 1.19.2 and 1.20.1 that made custom menu backgrounds in the Title screen sometimes look washed out (foggy) because of a gradient that got rendered over it (#1139)
  
 
 
